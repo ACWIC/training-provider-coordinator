@@ -1,0 +1,76 @@
+service: training-provider-api
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: python3.8
+
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - "s3:ListBucket"
+      Resource:
+        - "arn:aws:s3:::${self:custom.enrolmentAuthorizationBucket}"
+    - Effect: Allow
+      Action:
+        - "s3:GetObject"
+        - "s3:PutObject"
+        - "s3:DeleteObject"
+      Resource:
+        - "arn:aws:s3:::${self:custom.enrolmentAuthorizationBucket}/*"
+
+plugins:
+  - serverless-python-requirements
+
+custom:
+  enrolmentAuthorizationBucket: acwic-tp-enrolment-authorization
+
+  pythonRequirements:
+    fileName: requirements/serverless.txt
+
+package:
+  individually: true  # serverless-python-requirements: different dependencies for each function
+
+functions:
+  admin:
+    handler: handler.handler
+    module: admin # location of the lambda function app
+    environment:
+      STAGE_PREFIX: /dev
+      SERVICE_PREFIX: /admin
+      ENROLMENT_AUTHORISATION_BUCKET: ${self:custom.enrolmentAuthorizationBucket}
+    events:
+      - http:
+          path: /admin/{proxy+}
+          method: ANY
+  catalogue:
+    handler: handler.handler
+    module: catalogue
+    environment:
+      STAGE_PREFIX: /dev
+      SERVICE_PREFIX: /catalogue
+      ENROLMENT_AUTHORISATION_BUCKET: ${self:custom.enrolmentAuthorizationBucket}
+    events:
+      - http:
+          path: /catalogue/{proxy+}
+          method: ANY
+  enrolment:
+    handler: handler.handler
+    module: enrolment
+    environment:
+      STAGE_PREFIX: /dev
+      SERVICE_PREFIX: /enrolment
+      ENROLMENT_AUTHORISATION_BUCKET: ${self:custom.enrolmentAuthorizationBucket}
+    events:
+      - http:
+          path: /enrolment/{proxy+}
+          method: ANY
+
+
+# CloudFormation resources
+resources:
+  Resources:
+    enrolmentAuthorizationBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.enrolmentAuthorizationBucket}
