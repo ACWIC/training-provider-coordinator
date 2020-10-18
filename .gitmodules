@@ -1,0 +1,3 @@
+[submodule "enrolment"]
+	path = enrolment
+	url = git@github.com:ACWIC/training-provider-enrolment.git
