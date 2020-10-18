@@ -11,6 +11,7 @@ provider:
         - "s3:ListBucket"
       Resource:
         - "arn:aws:s3:::${self:custom.enrolmentAuthorizationBucket}"
+        - "arn:aws:s3:::${self:custom.courseBucket}"
     - Effect: Allow
       Action:
         - "s3:GetObject"
@@ -18,12 +19,14 @@ provider:
         - "s3:DeleteObject"
       Resource:
         - "arn:aws:s3:::${self:custom.enrolmentAuthorizationBucket}/*"
+        - "arn:aws:s3:::${self:custom.courseBucket}/*"
 
 plugins:
   - serverless-python-requirements
 
 custom:
   enrolmentAuthorizationBucket: acwic-tp-enrolment-authorization
+  courseBucket: acwic-tp-course
 
   pythonRequirements:
     fileName: requirements/serverless.txt
@@ -39,6 +42,7 @@ functions:
       STAGE_PREFIX: /dev
       SERVICE_PREFIX: /admin
       ENROLMENT_AUTHORISATION_BUCKET: ${self:custom.enrolmentAuthorizationBucket}
+      COURSE_BUCKET: ${self:custom.courseBucket}
     events:
       - http:
           path: /admin/{proxy+}
@@ -74,3 +78,7 @@ resources:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: ${self:custom.enrolmentAuthorizationBucket}
+    courseBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.courseBucket}
