@@ -3,6 +3,7 @@ frameworkVersion: '2'
 
 provider:
   name: aws
+  stage: dev
   runtime: python3.8
 
   iamRoleStatements:
@@ -10,23 +11,28 @@ provider:
       Action:
         - "s3:ListBucket"
       Resource:
-        - "arn:aws:s3:::${self:custom.enrolmentAuthorizationBucket}"
-        - "arn:aws:s3:::${self:custom.courseBucket}"
+        - "arn:aws:s3:::${self:custom.enrolmentAuthorizationBucket.${self:custom.stage}}"
+        - "arn:aws:s3:::${self:custom.courseBucket.${self:custom.stage}}"
     - Effect: Allow
       Action:
         - "s3:GetObject"
         - "s3:PutObject"
         - "s3:DeleteObject"
       Resource:
-        - "arn:aws:s3:::${self:custom.enrolmentAuthorizationBucket}/*"
-        - "arn:aws:s3:::${self:custom.courseBucket}/*"
+        - "arn:aws:s3:::${self:custom.enrolmentAuthorizationBucket.${self:custom.stage}}/*"
+        - "arn:aws:s3:::${self:custom.courseBucket.${self:custom.stage}}/*"
 
 plugins:
   - serverless-python-requirements
 
 custom:
-  enrolmentAuthorizationBucket: acwic-tp-enrolment-authorization
-  courseBucket: acwic-tp-course
+  stage: ${opt:stage, self:provider.stage}
+  enrolmentAuthorizationBucket:
+    dev: acwic-tp-enrolment-authorization-dev
+    prod: acwic-tp-enrolment-authorization
+  courseBucket:
+    dev: acwic-tp-course-dev
+    prod: acwic-tp-course
 
   pythonRequirements:
     fileName: requirements/serverless.txt
@@ -39,10 +45,10 @@ functions:
     handler: handler.handler
     module: admin # location of the lambda function app
     environment:
-      STAGE_PREFIX: /dev
+      STAGE_PREFIX: /${self:custom.stage}
       SERVICE_PREFIX: /admin
-      ENROLMENT_AUTHORISATION_BUCKET: ${self:custom.enrolmentAuthorizationBucket}
-      COURSE_BUCKET: ${self:custom.courseBucket}
+      ENROLMENT_AUTHORISATION_BUCKET: ${self:custom.enrolmentAuthorizationBucket.${self:custom.stage}}
+      COURSE_BUCKET: ${self:custom.courseBucket.${self:custom.stage}}
     events:
       - http:
           path: /admin/{proxy+}
@@ -51,9 +57,10 @@ functions:
     handler: handler.handler
     module: catalogue
     environment:
-      STAGE_PREFIX: /dev
+      STAGE_PREFIX: /${self:custom.stage}
       SERVICE_PREFIX: /catalogue
-      ENROLMENT_AUTHORISATION_BUCKET: ${self:custom.enrolmentAuthorizationBucket}
+      ENROLMENT_AUTHORISATION_BUCKET: ${self:custom.enrolmentAuthorizationBucket.${self:custom.stage}}
+      COURSE_BUCKET: ${self:custom.courseBucket.${self:custom.stage}}
     events:
       - http:
           path: /catalogue/{proxy+}
@@ -62,9 +69,9 @@ functions:
     handler: handler.handler
     module: enrolment
     environment:
-      STAGE_PREFIX: /dev
+      STAGE_PREFIX: /${self:custom.stage}
       SERVICE_PREFIX: /enrolment
-      ENROLMENT_AUTHORISATION_BUCKET: ${self:custom.enrolmentAuthorizationBucket}
+      ENROLMENT_AUTHORISATION_BUCKET: ${self:custom.enrolmentAuthorizationBucket.${self:custom.stage}}
     events:
       - http:
           path: /enrolment/{proxy+}
@@ -77,8 +84,8 @@ resources:
     enrolmentAuthorizationBucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: ${self:custom.enrolmentAuthorizationBucket}
+        BucketName: ${self:custom.enrolmentAuthorizationBucket.${self:custom.stage}}
     courseBucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: ${self:custom.courseBucket}
+        BucketName: ${self:custom.courseBucket.${self:custom.stage}}
