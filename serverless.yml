@@ -33,6 +33,9 @@ custom:
   courseBucket:
     dev: acwic-tp-course-dev
     prod: acwic-tp-course
+  userBucket:
+    dev: acwic-employer-users-dev
+    prod: acwic-employer-users
 
   pythonRequirements:
     fileName: requirements/serverless.txt
@@ -49,6 +52,7 @@ functions:
       SERVICE_PREFIX: /admin
       ENROLMENT_AUTHORISATION_BUCKET: ${self:custom.enrolmentAuthorizationBucket.${self:custom.stage}}
       COURSE_BUCKET: ${self:custom.courseBucket.${self:custom.stage}}
+      USER_BUCKET: ${self:custom.userBucket.${self:custom.stage}}
     events:
       - http:
           path: /admin/{proxy+}
@@ -61,6 +65,7 @@ functions:
       SERVICE_PREFIX: /catalogue
       ENROLMENT_AUTHORISATION_BUCKET: ${self:custom.enrolmentAuthorizationBucket.${self:custom.stage}}
       COURSE_BUCKET: ${self:custom.courseBucket.${self:custom.stage}}
+      USER_BUCKET: ${self:custom.userBucket.${self:custom.stage}}
     events:
       - http:
           path: /catalogue/{proxy+}
@@ -72,6 +77,7 @@ functions:
       STAGE_PREFIX: /${self:custom.stage}
       SERVICE_PREFIX: /enrolment
       ENROLMENT_AUTHORISATION_BUCKET: ${self:custom.enrolmentAuthorizationBucket.${self:custom.stage}}
+      USER_BUCKET: ${self:custom.userBucket.${self:custom.stage}}
     events:
       - http:
           path: /enrolment/{proxy+}
