@@ -1,0 +1,58 @@
+@startuml
+
+   package "Training Provider\nIntegration Microservices" {
+      component "Course\nCatalogue" as cat_s
+      database "course\ncatalogue" as cat_db
+      cat_s -up-> cat_db
+      database "industry\nstandards" as std_db
+      cat_s -up-> std_db
+
+      component "Enrolment\nService" as ao_s
+      database "access\ncontrol" as acl_db
+      ao_s -up-> acl_db
+      database "enrolment\nauthorisations" as po_db
+      ao_s -up-> po_db
+
+      component "Admin\nService" as admin_s
+      admin_s -down-> cat_db
+      admin_s -down-> std_db
+      admin_s -down-> acl_db
+      admin_s -down-> po_db
+      'admin_s -down-> journal
+   }
+
+   boundary "Admin API" as admin_api
+   admin_api -down- admin_s
+
+   actor "Training\nProvider" as tp
+   usecase "update\ncourse\ncatalogue" as uc_cat_up
+   uc_cat_up -down-> admin_api
+   tp -down-> uc_cat_up
+
+   usecase "adopt\nnew version of\nindustry standards" as uc_adopt
+   uc_adopt -down-> admin_api
+   tp -down-> uc_adopt
+
+   usecase "manage\naccess" as uc_acl
+   uc_acl -down-> admin_api
+   tp -down-> uc_acl
+
+   usecase "process\nenrolments" as uc_enrl
+   uc_enrl -down-> admin_api
+   tp -down-> uc_enrl
+
+   actor "Aged\nCare\nProvider" as ac
+
+   usecase "find\nenrolment\nopportunity" as uc_find
+   boundary "Catalogue\nBrowser\nAPI" as cat_api
+   cat_api -up- cat_s
+   ac -up-> uc_find
+   uc_find -up-> cat_api
+
+   usecase "procure\ntraining\nservices" as uc_procure
+   boundary "POST\n/enrolments/" as ao_api
+   ao_api -up- ao_s
+   ac -up-> uc_procure
+   uc_procure -up-> ao_api
+
+@enduml

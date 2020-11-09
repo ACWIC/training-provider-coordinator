@@ -2,3 +2,12 @@
 node_modules
 .serverless
 .DS_Store
+.venv
+
+# sphinz
+_build
+_static
+
+# emacs
+*~
+\#*\#
