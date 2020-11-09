@@ -8,9 +8,4 @@ python:
   install:
     - requirements: docs/requirements.txt
 submodules:
-  exclude:
-    - enrolment
-    - catalogue
-    - admin
-  include: []
-  recursive: false
+  exclude: all
