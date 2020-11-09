@@ -12,3 +12,5 @@ submodules:
     - enrolment
     - catalogue
     - admin
+  include: []
+  recursive: false
