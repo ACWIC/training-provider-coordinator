@@ -14,5 +14,5 @@ exclude_patterns = [
     '.DS_Store',
     '.venv'
 ]
-html_theme = 'alabaster'
+html_theme = 'classic'
 html_static_path = ['_static']
