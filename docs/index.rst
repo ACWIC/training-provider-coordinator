@@ -84,8 +84,8 @@ Source Code: https://github.com/ACWIC/training-provider-admin
 
 Live Endpoints:
 
- * Development Environment https://wpz8gp45w1.execute-api.us-east-1.amazonaws.com/dev/admin/docs
- * POC Environment https://6l2n6aweqg.execute-api.us-east-1.amazonaws.com/prod/admin/docs
+ * Development https://wpz8gp45w1.execute-api.us-east-1.amazonaws.com/dev/admin/docs
+ * POC https://6l2n6aweqg.execute-api.us-east-1.amazonaws.com/prod/admin/docs
 
 
 Enrolment Service
@@ -97,8 +97,8 @@ Source Code: https://github.com/ACWIC/training-provider-enrolment
 
 Live Endpoints:
 
-* Development Environment https://wpz8gp45w1.execute-api.us-east-1.amazonaws.com/dev/enrolment/docs
-* POC Environment https://6l2n6aweqg.execute-api.us-east-1.amazonaws.com/prod/enrolment/docs
+* Development https://wpz8gp45w1.execute-api.us-east-1.amazonaws.com/dev/enrolment/docs
+* POC https://6l2n6aweqg.execute-api.us-east-1.amazonaws.com/prod/enrolment/docs
 
 
 
@@ -111,5 +111,5 @@ Source Code: https://github.com/ACWIC/training-provider-catalogue
 
 Live Endpoints:
 
-* Development Environment https://wpz8gp45w1.execute-api.us-east-1.amazonaws.com/dev/catalogue/docs
-* POC Environment https://6l2n6aweqg.execute-api.us-east-1.amazonaws.com/prod/catalogue/docs
+* Development https://wpz8gp45w1.execute-api.us-east-1.amazonaws.com/dev/catalogue/docs
+* POC https://6l2n6aweqg.execute-api.us-east-1.amazonaws.com/prod/catalogue/docs
