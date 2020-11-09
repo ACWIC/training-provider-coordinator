@@ -56,18 +56,17 @@ Components
 
 The microservice suite is provided by three components.
 
- * **Admin Service**, used by the Training Provider to maintain
-   access, publish their course catalogue and process enrolments.
-   Because this is used privately by the Training Provider,
-   it does not form part of the 3rd party integration surface
-   and could be safely omitted in implementations
-   where there more convenient methods exist.
- * **Enrolment Service**, used by Aged Care Providers
-   to procure training services.
- * **Course Catalogue**, used by Aged Care Providers
-   to discover opportunities to enroll staff in training
-   that will meet their needs.
-
+* **Admin Service**, used by the Training Provider to maintain
+  access, publish their course catalogue and process enrolments.
+  Because this is used privately by the Training Provider,
+  it does not form part of the 3rd party integration surface
+  and could be safely omitted in implementations
+  where there more convenient methods exist.
+* **Enrolment Service**, used by Aged Care Providers
+  to procure training services.
+* **Course Catalogue**, used by Aged Care Providers
+  to discover opportunities to enroll staff in training
+  that will meet their needs.
 
 .. uml:: architecture.uml
 
@@ -84,8 +83,8 @@ Source Code: https://github.com/ACWIC/training-provider-admin
 
 Live Endpoints:
 
- * Development https://wpz8gp45w1.execute-api.us-east-1.amazonaws.com/dev/admin/docs
- * POC https://6l2n6aweqg.execute-api.us-east-1.amazonaws.com/prod/admin/docs
+* Development https://wpz8gp45w1.execute-api.us-east-1.amazonaws.com/dev/admin/docs
+* POC https://6l2n6aweqg.execute-api.us-east-1.amazonaws.com/prod/admin/docs
 
 
 Enrolment Service
