@@ -30,15 +30,18 @@ Two methods are supported:
   This is an example of hosting the system
   using cost-effective utility infrastructure.
 
-The README file
-(at https://github.com/ACWIC/training-provider-coordinator/blob/main/README.md )
+The README file at
+https://github.com/ACWIC/training-provider-coordinator/blob/main/README.md
 contains technical documentation on these deployment scenarios.
 
 The AWS deployment demonstrates how the system can be hosted
 with at negligible operating cost.
 In this configuration,
 annual operating cost for a SME training provider
-would be approximately equivalent to one cup of coffee per year.
+would be approximately equivalent to one cup of coffee
+(if not entirely free,
+likely to fit within the constraints of AWS Free Tier).
+
 Large scale training providers
 are likely to need sophisticated integration
 with existing systems.
